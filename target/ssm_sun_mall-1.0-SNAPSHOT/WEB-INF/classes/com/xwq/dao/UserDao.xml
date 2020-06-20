@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xwq.dao.UserDao">
+    <!-- 查询返回的是实体类对象也可以写实体的绝对路径com.aaa.entity.User -->
+    <select id="Login" resultType="user" parameterType="user">
+		select *
+        from ssm_sun1.user
+        where username=#{username} and password=#{password}
+	</select>
+    <select id="findOne" resultType="int" parameterType="user">
+        select count(*) from
+        ssm_sun1.user
+        where username=#{username}
+    </select>
+
+    <insert  id="Register" parameterType="user" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into  ssm_sun1.user(username, nikename, password, email, phone, role)
+        values (#{username}, #{nikename}, #{password}, #{email}, #{phone}, #{role})
+	</insert>
+</mapper>
