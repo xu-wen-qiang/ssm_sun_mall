@@ -2,7 +2,6 @@ package com.xwq.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.sun.imageio.plugins.common.ImageUtil;
 import com.xwq.entity.Product;
 import com.xwq.service.ProductService;
 import com.xwq.util.FileUtil;
@@ -102,11 +101,12 @@ public class ProductController {
 
     //查询单条记录
     @RequestMapping("/findOne")
-    public String findOne(Model model, int id) {
+    public @ResponseBody
+    Product findOne(int id) {
         Product product = productService.findOne(id);
-        model.addAttribute("product", product);
+//        model.addAttribute("product", product);
         //返给更新的方法
-        return "upd";
+        return product;
     }
 
     //修改数据

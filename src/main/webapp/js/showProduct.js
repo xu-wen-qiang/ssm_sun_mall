@@ -1,10 +1,12 @@
 // 页面初始化获取数据
 $(function () {
-    let nikename = $.cookie("nikename")
-    alert(nikename)
-    // $("#nikename").append(nikename+"1")
+    alert(getCookie("nikename"))
+    console.log("nikename" + getCookie("nikename"))
+    let nikename = getCookie("nikename");
+    $("#nikename").append(nikename)
     category()
     item()
+    updSave()
 })
 
 // 添加模态框（Modal）插件
@@ -91,9 +93,12 @@ function listItem(data) {
             "<button type=\"button\" class=\"btn btn-success btn-lg\" onclick=\"return confirm('确定要删除信息吗？') \">" +
             "<span class=\"glyphicon glyphicon-trash\"></span>删除</button></a></td>" +
             "<td>" +
-            "<a href=\"http://127.0.0.1:8080/ssm_sun_mall_war/product/findOne?id=" + data.list[i].id + "\">" +
-            "<button type=\"button\" class=\"btn btn-success btn-lg\">\n" +
-            "<span class=\"glyphicon glyphicon-edit\"></span> 修改 </button></a></td>" +
+
+            "<a href=\"javascript:upd(" + data.list[i].id + ")\">" +
+            "<button type=\"button\" class=\"btn btn-primary btn-lg\"" +
+            "data-toggle=\"modal\" data-target=\"#myUpdModal\">" +
+            "<span class=\"glyphicon glyphicon-plus\"></span>更新</button>" +
+            "</a></td>" +
             "</tr>"
     }
 
@@ -158,4 +163,38 @@ function del(id) {
             pages(data)
         }
     })
+}
+
+function upd(id) {
+    $.ajax({
+        type: 'post',
+        url: "http://127.0.0.1:8080/ssm_sun_mall_war/product/findOne?id=" + id,
+        success: function (data) {
+            console.log(data + "===============================" + id)
+            $("#updId").val(data.id)
+            $("#updName").val(data.name)
+            $("#updPrice").val(data.price)
+            $("#updMainImg").val(data.mainImage)
+            $("#updDetail").val(data.detail)
+        }
+    })
+}
+
+function updSave() {
+    $("#updSave").click(function () {
+        $.ajax({
+            type: "POST",   //提交的方法
+            url: "http://127.0.0.1:8080/ssm_sun_mall_war/product/upd", //提交的地址
+            data: $('#updForm').serialize(),// 序列化表单值
+            async: false,
+            error: function (request) {  //失败的话
+                console.log(request)
+                alert("Connection error" + request);
+            },
+            success: function (data) {  //成功
+                alert("更新成功")
+                window.location.href = "http://127.0.0.1:8080/ssm_sun_mall_war/pages/showProduct"
+            }
+        });
+    });
 }

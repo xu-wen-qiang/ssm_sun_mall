@@ -34,7 +34,7 @@
         <!-- 指定前缀 -->
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <!-- 指定后缀 -->
-        <property name="suffix" value=".jsp"/>
+        <property name="suffix" value=".html"/>
     </bean>
     <!--    文件上传-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

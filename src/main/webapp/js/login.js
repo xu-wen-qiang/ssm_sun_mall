@@ -1,13 +1,3 @@
-var nikeName = ''
-
-function getNikeName() {
-    return nikeName;
-}
-
-function setNikeName(nikename) {
-    this.nikeName = nikename;
-}
-
 /* 以json的格式提交登录传参 */
 $(function () {
     console.log("执行登陆js")
@@ -38,11 +28,10 @@ $(function () {
                     console.log(data)
                     console.log(data.data)
                     console.log(data.data.nikename)
-                    let name = data.data.nikename;
-                    setNikeName(name)
-                    // alert(data.data)
-                    $.cookie("nikename", nikename);
-                    // $.cookie("userid",data.data.id)
+                    let nikename = data.data.nikename;
+                    SetCookie("nikename", nikename)
+                    alert(data.data)
+                    // $.cookie("nikename", nikename);
                     if (data.errorCode == 201) {
                         alert(data.errorMsg)
                     } else if (data.errorCode == 200) {
@@ -59,7 +48,6 @@ $(function () {
         }
     });
 })
-
 $(function () {
     $("#save").click(function () {
         $.ajax({
@@ -84,3 +72,27 @@ $(function () {
         });
     });
 })
+
+function SetCookie(name, value)//两个参数，一个是cookie的名子，一个是值
+{
+    // var Days = 30; //此 cookie 将被保存 30 天
+    // var exp  = new Date();    //new Date("December 31, 9998");
+    // exp.setTime(exp.getTime() + Days*24*60*60*1000);
+    document.cookie = name + "=" + escape(value);//+ ";expires=" + exp.toGMTString()
+}
+
+function getCookie(name)//取cookies函数
+{
+    var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+    if (arr != null) return unescape(arr[2]);
+    return null;
+
+}
+
+function delCookie(name)//删除cookie
+{
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1);
+    var cval = getCookie(name);
+    if (cval != null) document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+}
