@@ -66,7 +66,7 @@ public class UserController {
          * 重定向到首页或登陆界面
          */
         session.invalidate();
-        return "redirect:/login.html";
+        return "login";
     }
 
     // 注册

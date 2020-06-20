@@ -7,9 +7,9 @@
         <welcome-file>login.html</welcome-file>
         <welcome-file>login.htm</welcome-file>
         <welcome-file>login.jsp</welcome-file>
-        <welcome-file>default.html</welcome-file>
-        <welcome-file>default.htm</welcome-file>
-        <welcome-file>default.jsp</welcome-file>
+        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.htm</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
     <!-- 配置ContextLoaderListenner 作用：当启动web容器时，初始化spring容器，以便于获取spring中配置的bean-->
     <context-param>

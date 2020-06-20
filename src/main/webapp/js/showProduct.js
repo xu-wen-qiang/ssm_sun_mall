@@ -1,12 +1,9 @@
 // 页面初始化获取数据
 $(function () {
-    alert(getCookie("nikename"))
-    console.log("nikename" + getCookie("nikename"))
-    let nikename = getCookie("nikename");
-    $("#nikename").append(nikename)
     category()
     item()
     updSave()
+    // add()
 })
 
 // 添加模态框（Modal）插件
@@ -150,6 +147,24 @@ function clear() {
     $(".pager").empty()
 }
 
+// function add() {
+//     $("#addSave").click(function () {
+//         $.ajax({
+//             type: "POST",   //提交的方法
+//             url: "http://127.0.0.1:8080/ssm_sun_mall_war/product/addProduct", //提交的地址
+//             data: $('#addForm').serialize(),// 序列化表单值
+//             async: false,
+//             error: function (request) {  //失败的话
+//                 console.log(request)
+//                 alert("Connection error" + request);
+//             },
+//             success: function (data) {  //成功
+//                 alert("添加成功")
+//                 window.location.href = "http://127.0.0.1:8080/ssm_sun_mall_war/pages/showProduct"
+//             }
+//         });
+//     });
+// }
 function del(id) {
     $.ajax({
         type: 'post',

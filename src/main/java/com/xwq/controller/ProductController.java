@@ -89,7 +89,8 @@ public class ProductController {
         // 调用添加方法
         productService.add(product);
         // 内部转发，重新加载商品列表
-        return "redirect:queryProduct";
+//        return "redirect:queryProduct";
+        return "showProduct";
     }
 
     //删除商品

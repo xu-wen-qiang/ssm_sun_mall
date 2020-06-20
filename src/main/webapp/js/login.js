@@ -36,9 +36,9 @@ $(function () {
                         alert(data.errorMsg)
                     } else if (data.errorCode == 200) {
                         if (data.data.role == 0) {
-                            window.location.href = "http://127.0.0.1:8080/ssm_sun_mall_war/pages/showProduct"
+                            window.location.href = "http://127.0.0.1:8080/ssm_sun_mall_war/html/showProduct.html?userid=" + data.data.id + "nikename=" + data.data.nikename
                         } else {
-
+                            window.location.href = "http://127.0.0.1:8080/ssm_sun_mall_war/index.html?userid=" + data.data.id + "&username=" + data.data.nikename
                         }
                     }
                 }, error: function (e) {
