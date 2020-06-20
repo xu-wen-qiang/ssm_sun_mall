@@ -13,7 +13,7 @@
         where username=#{username}
     </select>
 
-    <insert  id="Register" parameterType="user" useGeneratedKeys="true" keyProperty="id">
+    <insert id="Register" parameterType="user" useGeneratedKeys="true" keyProperty="id">
         insert ignore into  ssm_sun1.user(username, nikename, password, email, phone, role)
         values (#{username}, #{nikename}, #{password}, #{email}, #{phone}, #{role})
 	</insert>

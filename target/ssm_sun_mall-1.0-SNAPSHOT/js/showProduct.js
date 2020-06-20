@@ -6,6 +6,7 @@ $(function () {
     category()
     item()
 })
+
 // 添加模态框（Modal）插件
 function myModal() {
     $("#myModal").modal({
@@ -13,6 +14,7 @@ function myModal() {
         backdrop: true
     });
 }
+
 // 获取种类列表
 function category() {
     var htmlStr = '';
@@ -22,7 +24,7 @@ function category() {
         success: function (data) {
             console.log(data)
             for (var i in data) {
-                htmlStr += "<li><a href='javascript:cItem("+data[i].id+")')>" + data[i].name + "</a></li>"
+                htmlStr += "<li><a href='javascript:cItem(" + data[i].id + ")')>" + data[i].name + "</a></li>"
                 categoryStr += "<option value=" + data[i].id + ">" + data[i].name + "</option>"
             }
             $('.category').append(htmlStr);
@@ -30,12 +32,13 @@ function category() {
         }
     })
 }
+
 // 通过类别id查询商品
 function cItem(cid) {
-    console.log("cItem"+(cid))
+    console.log("cItem" + (cid))
     $.ajax({
-        type:'post',
-        url: "http://127.0.0.1:8080/ssm_sun_mall_war/product/queryProductByCid?cid="+cid,
+        type: 'post',
+        url: "http://127.0.0.1:8080/ssm_sun_mall_war/product/queryProductByCid?cid=" + cid,
         // data:{
         //     cid:cid
         // },
@@ -48,6 +51,7 @@ function cItem(cid) {
         }
     })
 }
+
 // 商品&分页插件展示
 function item() {
     $.ajax({
@@ -59,9 +63,10 @@ function item() {
         }
     })
 }
+
 function itemByPn(pn) {
     $.ajax({
-        url: "http://127.0.0.1:8080/ssm_sun_mall_war/product/queryProduct?pn="+pn,
+        url: "http://127.0.0.1:8080/ssm_sun_mall_war/product/queryProduct?pn=" + pn,
         success: function (data) {
             console.log(data)
             clear();
@@ -70,6 +75,7 @@ function itemByPn(pn) {
         }
     })
 }
+
 // 商品展示
 function listItem(data) {
     // alert(window.location.href)
@@ -93,6 +99,7 @@ function listItem(data) {
 
     $('.item tbody').append(htmlStr);
 }
+
 // 分页插件
 function pages(data) {
 
@@ -104,14 +111,14 @@ function pages(data) {
         "<li><a href='javascript:itemByPn(1)'>首页</a></li>"
     if (data.hasPreviousPageStr) {
         hasPreviousPageStr +=
-            "<li><a href='javascript:itemByPn("+ data.pageNum - 1 + ")'aria-label='Previous'><span aria-hidden=\"true\">&laquo;</span></a></li>"
+            "<li><a href='javascript:itemByPn(" + data.pageNum - 1 + ")'aria-label='Previous'><span aria-hidden=\"true\">&laquo;</span></a></li>"
 
     }
 
     for (var i = 0; i < (data.navigatepageNums).length; i++) {
         if (data.navigatepageNums[i] == data.pageNum) {
             navigatepageNumsStr +=
-                "<li class='active'><a href='javascript:itemByPn("+ data.navigatepageNums[i] + ")'>" + data.navigatepageNums[i] + "</a></li>"
+                "<li class='active'><a href='javascript:itemByPn(" + data.navigatepageNums[i] + ")'>" + data.navigatepageNums[i] + "</a></li>"
         }
         if (data.navigatepageNums[i] != data.pageNum) {
             navigatepageNumsStr +=
@@ -131,6 +138,7 @@ function pages(data) {
     // alert(Str)
     $(".pager").append(Str)
 }
+
 // 将需要重新加载数据的元素清空
 function clear() {
     $('.item tbody').empty()
@@ -139,8 +147,8 @@ function clear() {
 
 function del(id) {
     $.ajax({
-        type:'post',
-        url: "http://127.0.0.1:8080/ssm_sun_mall_war/product/del?id="+id,
+        type: 'post',
+        url: "http://127.0.0.1:8080/ssm_sun_mall_war/product/del?id=" + id,
 
         success: function (data) {
             console.log(data)

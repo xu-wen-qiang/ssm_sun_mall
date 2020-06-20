@@ -1,3 +1,10 @@
+var nikeName = ''
+function getNikeName() {
+    return nikeName;
+}
+function setNikeName(nikename){
+    this.nikeName = nikename;
+}
 /* 以json的格式提交登录传参 */
 $(function () {
     console.log("执行登陆js")
@@ -28,16 +35,17 @@ $(function () {
                     console.log(data)
                     console.log(data.data)
                     console.log(data.data.nikename)
-                    let nikename = data.data.nikename;
+                    let name = data.data.nikename;
+                    setNikeName(name)
                     // alert(data.data)
-                    $.cookie("nikename",nikename);
+                    $.cookie("nikename", nikename);
                     // $.cookie("userid",data.data.id)
                     if (data.errorCode == 201) {
                         alert(data.errorMsg)
                     } else if (data.errorCode == 200) {
-                        if (data.data.role==0){
+                        if (data.data.role == 0) {
                             window.location.href = "http://127.0.0.1:8080/ssm_sun_mall_war/pages/showProduct"
-                        }else {
+                        } else {
 
                         }
                     }
@@ -53,20 +61,21 @@ $(function () {
     $("#save").click(function () {
         $.ajax({
             type: "POST",   //提交的方法
-            url:"http://127.0.0.1:8080/ssm_sun_mall_war/user/register", //提交的地址
-            data:$('#ajaxForm').serialize(),// 序列化表单值
+            url: "http://127.0.0.1:8080/ssm_sun_mall_war/user/register", //提交的地址
+            data: $('#ajaxForm').serialize(),// 序列化表单值
             async: false,
-            error: function(request) {  //失败的话
+            error: function (request) {  //失败的话
                 console.log(request)
                 alert("Connection error");
             },
-            success: function(data) {  //成功
+            success: function (data) {  //成功
                 console.log(data);  //就将返回的数据显示出来
-                if (data.errorCode==201){
+                if (data.errorCode == 201) {
                     alert(data.errorMsg)
-                }if (data.errorCode==200){
+                }
+                if (data.errorCode == 200) {
                     alert(data.errorMsg)
-                    window.location.href="http://127.0.0.1:8080/ssm_sun_mall_war/login.jsp"
+                    window.location.href = "http://127.0.0.1:8080/ssm_sun_mall_war/login.jsp"
                 }
             }
         });

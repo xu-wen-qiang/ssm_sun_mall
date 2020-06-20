@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<beans  xmlns="http://www.springframework.org/schema/beans"
-        xmlns:context="http://www.springframework.org/schema/context"
-        xmlns:aop="http://www.springframework.org/schema/aop"
-        xmlns:tx="http://www.springframework.org/schema/tx"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.3.xsd
@@ -16,7 +16,7 @@
 
 
     <!-- 加载 db.properties文件中的内容 -->
-    <context:property-placeholder location="classpath:db.properties" />
+    <context:property-placeholder location="classpath:db.properties"/>
     <!-- 数据源管理 -->
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
         <property name="url" value="${jdbc.url}"/>
@@ -51,9 +51,9 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
     <!-- 启动注解 -->
-    <context:component-scan base-package="com.xwq.**" />
+    <context:component-scan base-package="com.xwq.**"/>
     <!-- 启动AOP注解 -->
-<!--    <aop:aspectj-autoproxy />-->
+    <!--    <aop:aspectj-autoproxy />-->
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="*" propagation="REQUIRED" isolation="DEFAULT" read-only="false"/>

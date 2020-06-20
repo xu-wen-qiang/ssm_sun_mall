@@ -21,8 +21,8 @@
     <script type="text/javascript" src="http://127.0.0.1:8080/ssm_sun_mall_war/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="http://127.0.0.1:8080/ssm_sun_mall_war/js/showProduct.js"></script>
     <script type="text/javascript">
-        alert("javascript")
-        $("#nikename").append($.cookie("nikename"))
+        alert(getNikeName())
+        $("#nikename").append(getNikeName())
     </script>
     <style>
         th, td {
@@ -43,7 +43,8 @@
                 <ul class="nav navbar-nav navbar" style="margin:1% 0 1% 34%;">
                     <li class="active">
                         <a class="icon-bar" href="#" style="background-color:#087b71">
-                            <font style="font-size:31px;font-weight:bold;font-style:italic;">欢迎来到商品后台管理系统</font></a></li>
+                            <font style="font-size:31px;font-weight:bold;font-style:italic;">欢迎来到商品后台管理系统</font></a>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right" style="margin:1% 0 1% 0%;">
                     <li><h4 style="color:red;">

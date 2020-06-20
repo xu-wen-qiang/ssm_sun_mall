@@ -24,7 +24,7 @@
     <script src="http://127.0.0.1:8080/ssm_sun_mall_war/js/jquery-3.2.1.min.js"></script>
     <script src="http://127.0.0.1:8080/ssm_sun_mall_war/js/bootstrap.min.js"></script>
     <script src="http://127.0.0.1:8080/ssm_sun_mall_war/js/login.js" type="text/javascript"></script>
-    <script src="http://127.0.0.1:8080/ssm_sun_mall_war/js/jquery.cookie.js" type="text/javascript" ></script>
+    <script src="http://127.0.0.1:8080/ssm_sun_mall_war/js/jquery.cookie.js" type="text/javascript"></script>
 
 </head>
 

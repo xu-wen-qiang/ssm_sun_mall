@@ -1,3 +1,13 @@
+var nikeName = ''
+
+function getNikeName() {
+    return nikeName;
+}
+
+function setNikeName(nikename) {
+    this.nikeName = nikename;
+}
+
 /* 以json的格式提交登录传参 */
 $(function () {
     console.log("执行登陆js")
@@ -28,7 +38,8 @@ $(function () {
                     console.log(data)
                     console.log(data.data)
                     console.log(data.data.nikename)
-                    let nikename = data.data.nikename;
+                    let name = data.data.nikename;
+                    setNikeName(name)
                     // alert(data.data)
                     $.cookie("nikename", nikename);
                     // $.cookie("userid",data.data.id)

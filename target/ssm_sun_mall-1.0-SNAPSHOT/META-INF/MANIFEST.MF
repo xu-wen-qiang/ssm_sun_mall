@@ -1,3 +1,5 @@
 Manifest-Version: 1.0
-Class-Path: 
+Created-By: IntelliJ IDEA
+Built-By: 17749
+Build-Jdk: 1.8.0_131
 

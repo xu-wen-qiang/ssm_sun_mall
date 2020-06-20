@@ -11,7 +11,7 @@
        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
     <mvc:default-servlet-handler/>
     <!-- 配置用户定义的controler的实例 -->
-    <context:component-scan base-package="com.xwq.controller" />
+    <context:component-scan base-package="com.xwq.controller"/>
     <!-- 加载注册驱动 -->
     <mvc:annotation-driven/>
     <mvc:resources mapping="js" location="/js/**"/>
@@ -20,23 +20,23 @@
     <mvc:resources mapping="images" location="/images/**"/>
     <mvc:resources mapping="upload" location="/upload/**"/>
     <!-- 自定义参数绑定 -->
-<!--    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">-->
-<!--        &lt;!&ndash; 转换器 &ndash;&gt;-->
-<!--        <property name="converters">-->
-<!--            <list>-->
-<!--                &lt;!&ndash; 日期类型转换 &ndash;&gt;-->
-<!--                <bean class="com.xwq.converter.DateConverter"/>-->
-<!--            </list>-->
-<!--        </property>-->
-<!--    </bean>-->
+    <!--    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">-->
+    <!--        &lt;!&ndash; 转换器 &ndash;&gt;-->
+    <!--        <property name="converters">-->
+    <!--            <list>-->
+    <!--                &lt;!&ndash; 日期类型转换 &ndash;&gt;-->
+    <!--                <bean class="com.xwq.converter.DateConverter"/>-->
+    <!--            </list>-->
+    <!--        </property>-->
+    <!--    </bean>-->
     <!-- 配置视图解析器 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- 指定前缀 -->
-        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="prefix" value="/WEB-INF/jsp/"/>
         <!-- 指定后缀 -->
-        <property name="suffix" value=".jsp" />
+        <property name="suffix" value=".jsp"/>
     </bean>
-<!--    文件上传-->
+    <!--    文件上传-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="10485760"></property>
         <property name="defaultEncoding" value="UTF-8"/>

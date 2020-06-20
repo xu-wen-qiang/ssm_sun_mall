@@ -21,8 +21,8 @@
     <script type="text/javascript" src="http://127.0.0.1:8080/ssm_sun_mall_war/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="http://127.0.0.1:8080/ssm_sun_mall_war/js/showProduct.js"></script>
     <script type="text/javascript">
-        alert("javascript")
-        $("#nikename").append($.cookie("nikename"))
+        alert(getNikeName())
+        $("#nikename").append(getNikeName())
     </script>
     <style>
         th, td {
