@@ -1,247 +1,127 @@
-var goodsList = [{
-    id: 1234564876,
-    imgUrl: 'img/1.png',
-    goodsInfo: '号地块健身房回复的科技示范户快速坚实的看了看大家发快递了很费劲的开始放假',
-    goodsParams: '四季度后付款的酸辣粉',
-    price: 199,
-    goodsCount: 1,
-    singleGoodsMoney: 199
-},
-    {
-        id: 1234564876,
-        imgUrl: 'img/2.png',
-        goodsInfo: '号地块健身房回复的科技示范户快速坚实的看了看大家发快递了很费劲的开始放假',
-        goodsParams: '四季度后付款的酸辣粉',
-        price: 299,
-        goodsCount: 2,
-        singleGoodsMoney: 598
-    },
-    {
-        id: 1234564876,
-        imgUrl: 'img/3.png',
-        goodsInfo: '号地块健身房回复的科技示范户快速坚实的看了看大家发快递了很费劲的开始放假',
-        goodsParams: '四季度后付款的酸辣粉',
-        price: 399,
-        goodsCount: 1,
-        singleGoodsMoney: 399
-    }
-]
-var deleteGoods = null
-loadGoods()
+var userid = $.query.get("userId")
+alert(userid)
+var i = 0;
+$(function () {
+    item()
+    $("#ifAll").on("click", function () {
+        if (i == 0) {
+            //把所有复选框选中
+            $("td :checkbox").prop("checked", true);
+            i = 1;
+        } else {
+            $("td :checkbox").prop("checked", false);
+            i = 0;
+        }
+    });
+})
 
-function loadGoods() {
-    $.each(goodsList, function (i, item) {
-        var goodsHtml = '<div class="goods-item">' +
-            '<div class="panel panel-default">' +
-            '<div class="panel-body">' +
-            '<div class="col-md-1 car-goods-info">' +
-            '<label><input type="checkbox" class="goods-list-item"/></label>' +
-            '</div>' +
-            '<div class="col-md-3 car-goods-info goods-image-column">' +
-            '<img class="goods-image" src="' + item.imgUrl + '" style="width: 100px; height: 100px;" />' +
-            '<span id="goods-info">' +
-            item.goodsInfo +
-            '</span>' +
-            '</div>' +
-            '<div class="col-md-3 car-goods-info goods-params">' + item.goodsParams + '</div>' +
-            '<div class="col-md-1 car-goods-info goods-price"><span>￥</span><span class="single-price">' + item.price + '</span></div>' +
-            '<div class="col-md-1 car-goods-info goods-counts">' +
-            '<div class="input-group">' +
-            '<div class="input-group-btn">' +
-            '<button type="button" class="btn btn-default car-decrease">-</button>' +
-            '</div>' +
-            '<input type="text" class="form-control goods-count" value="' + item.goodsCount + '">' +
-            '<div class="input-group-btn">' +
-            '<button type="button" class="btn btn-default car-add">+</button>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '<div class="col-md-1 car-goods-info goods-money-count"><span>￥</span><span class="single-total">' + item.singleGoodsMoney + '</span></div>' +
-            '<div class="col-md-2 car-goods-info goods-operate">' +
-            '<button type="button" class="btn btn-danger item-delete">删除</button>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>'
-        $('.goods-content').append(goodsHtml)
+function item() {
+    var tbody = ""
+    $.ajax({
+        url: "http://127.0.0.1:8080/ssm_sun_mall_war/cart/queryAll?userId=" + userid,
+        success(data) {
+            if (data.errorCode == 200) {
+                for (let i in data.data) {
+                    var tolPrc = (data.data[i].product.price) * (data.data[i].quantity);
+                    tbody += `
+                            <tr>
+                            <td>
+                              <div class="checkbox">
+                                <label>
+                                  <input type="checkbox" name="ids" value="${data.data[i].id}">
+                                </label>
+                              </div>
+                            </td>
+                            <td name="name">${data.data[i].product.name}</td>
+                            <td name="detail">${data.data[i].product.detail}</td>
+                            <td name="mianImage">${data.data[i].product.mainImage}</td>
+                            <td name="price">${data.data[i].product.price}</td>
+                            <td>
+                            <input type="button" value="+" id="add" "/>
+                            <input type="text" value="${data.data[i].quantity}" class="text_box" id="text" onblur="change()"/>
+                            <input type="button" value="-" id="min"/>
+                            </td>
+                            <td>#</td>
+                            </tr>`
+                }
+                $("#tbody").append(tbody)
+            }
+            console.log(data)
+            alert(data)
+        }
     })
 }
 
-function ShoppingCarObserver(elInput, isAdd) {
-    this.elInput = elInput
-    this.parents = this.elInput.parents('.goods-item')
-    this.count = parseInt(this.elInput.val())
-    this.isAdd = isAdd
-    this.singlePrice = parseFloat(this.parents.find('.single-price').text())
-    this.computeGoodsMoney = function () {
-        var moneyCount = this.count * this.singlePrice
-        var singleTotalEl = this.parents.find('.single-total')
-        console.log(moneyCount)
-        singleTotalEl.empty().append(moneyCount)
-    }
-    this.showCount = function () {
-        var isChecked = this.parents.find('.goods-list-item')[0].checked
-        var GoodsTotalMoney = parseFloat($('#selectGoodsMoney').text())
-        var goodsTotalCount = parseInt($('#selectGoodsCount').text())
-        if (this.elInput) {
-            if (this.isAdd) {
-                ++this.count
-                if (isChecked) {
-                    $('#selectGoodsMoney').empty().append(GoodsTotalMoney + this.singlePrice)
-                    $('#selectGoodsCount').empty().append(goodsTotalCount + 1)
-                }
+//列表复选框
+//定义向后台传输的所有id
+var ids = '';
+
+//复选框的更改,如:选择,取消选择
+function updateSelection(selectFlag) {
+    //清空
+    ids = '';
+    //页面input的name属性
+    var selectIds = document.getElementsByName("ids");
+    for (var i = 0; i < selectIds.length; i++) {
+        if (selectIds[i].checked) {
+            //取得该属性的值id
+            var id = $(selectIds[i]).val();
+            //拼接ids字符串
+            if (ids == '') {
+                ids = id;
             } else {
-                if (parseInt(this.count) <= 1) {
-                    return
+                ids += ',' + id;
+            }
+        }
+    }
+    alert(ids)
+}
+
+//批量删除事件
+function batchDeleYyb() {
+    //清空
+    ids = '';
+    //页面input的name属性
+    var selectIds = document.getElementsByName("ids");
+    for (var i = 0; i < selectIds.length; i++) {
+        if (selectIds[i].checked) {
+            //取得该属性的值id
+            var id = $(selectIds[i]).val();
+            //拼接ids字符串
+            if (ids == '') {
+                ids = id;
+            } else {
+                ids += ',' + id;
+            }
+        }
+    }
+
+    if (ids.length == 0) {
+        alert("请选择要删除的app!");
+        return;
+    }
+
+    if (window.confirm("确认删除吗?")) {
+        $.ajax({//利用ajax发出请求
+            type: "post",//请求类型
+            url: "http://127.0.0.1:8080/ssm_sun_mall_war/cart/deleteList?ids=" + ids + "&uid=" + userid, //向Controller里的batchDeleYyb传输ids
+            // data: {
+            //     ids: ids,
+            //     uid:userid
+            // },     //键值对
+            success: function (data) {//删除成功后，后台会返回一个"ok";
+                if (data.errorCode == 200) {
+                    alert("删除成功");//返回ok后弹出一个对话框。
+                    location.href = "myCart.html";//相当于刷新界面
                 } else {
-                    --this.count
-                    if (isChecked) {
-                        $('#selectGoodsMoney').empty().append(GoodsTotalMoney - this.singlePrice)
-                        $('#selectGoodsCount').empty().append(goodsTotalCount - 1)
-                    }
+                    alert("删除失败");
                 }
             }
-            this.elInput.val(this.count)
-        }
+        });
     }
-    this.checkIsAll = function () {
-        var checkLen = $('.goods-list-item:checked').length
-        if (checkLen > 0) {
-            $('.submitData').removeClass('submitDis')
-        } else {
-            $('.submitData').addClass('submitDis')
-        }
-        if ($('.goods-item').length === checkLen) {
-            $('#checked-all-bottom, #check-goods-all').prop('checked', true)
-        } else {
-            $('#checked-all-bottom, #check-goods-all').prop('checked', false)
-        }
-    }
-    this.checkedChange = function (isChecked) {
-        if (isChecked === undefined) {
-            var isChecked = this.parents.find('.goods-list-item')[0].checked
-        }
-        var itemTotalMoney = parseFloat(this.parents.find('.single-total').text())
-        var GoodsTotalMoney = parseFloat($('#selectGoodsMoney').text())
-        var itemCount = parseInt(this.parents.find('.goods-count').val())
-        var goodsTotalCount = parseInt($('#selectGoodsCount').text())
-        if (isChecked) {
-            $('#selectGoodsMoney').empty().append(itemTotalMoney + GoodsTotalMoney)
-            $('#selectGoodsCount').empty().append(itemCount + goodsTotalCount)
-        } else {
-            if (GoodsTotalMoney - itemTotalMoney === 0) {
-                $('#selectGoodsMoney').empty().append('0.00')
-                if (!$('.submitData').hasClass('submitDis')) {
-                    $('.submitData').addClass('submitDis')
-                }
-            } else {
-                $('#selectGoodsMoney').empty().append(GoodsTotalMoney - itemTotalMoney)
-            }
-            $('#selectGoodsCount').empty().append(goodsTotalCount - itemCount)
-        }
-    }
-    this.deleteGoods = function () {
-        var isChecked = this.parents.find('.goods-list-item')[0].checked
-        if (isChecked) {
-            this.checkedChange(false)
-        }
-        this.parents.remove()
-        this.checkOptions()
-    }
-    this.checkOptions = function () {
-        if ($('#check-goods-all')[0].checked) {
-            if ($('.goods-list-item').length <= 0) {
-                $('#checked-all-bottom, #check-goods-all').prop('checked', false)
-            }
-        }
-    }
+    alert(ids)
 }
 
-function checkedAll(_this) {
-    if ($('.goods-item').length <= 0) {
-        $('.submitData').addClass('submitDis')
-    } else {
-        $('.submitData').removeClass('submitDis')
-    }
-    for (var i = 0; i < $('.goods-item').length; i++) {
-        var elInput = $('.goods-item').eq(i).find('.goods-list-item')
-        var isChecked = $('.goods-item').eq(i).find('.goods-list-item')[0].checked
-        var checkAllEvent = new ShoppingCarObserver(elInput, null)
-        if (_this.checked) {
-            if (!isChecked) {
-                elInput.prop('checked', true)
-                checkAllEvent.checkedChange(true)
-            }
-        } else {
-            if (!$('.submitData').hasClass('submitDis')) {
-                $('.submitData').addClass('submitDis')
-            }
-            if (isChecked) {
-                elInput.prop('checked', false)
-                checkAllEvent.checkedChange(false)
-            }
-        }
-    }
-}
+//全选/反选操作
+//全选
 
-$('#check-goods-all').on('change', function () {
-    if (this.checked) {
-        $('#checked-all-bottom').prop('checked', true)
-    } else {
-        $('#checked-all-bottom').prop('checked', false)
-    }
-    checkedAll(this)
-})
-$('#checked-all-bottom').on('change', function () {
-    if (this.checked) {
-        $('#check-goods-all').prop('checked', true)
-    } else {
-        $('#check-goods-all').prop('checked', false)
-    }
-    checkedAll(this)
-})
-$('.goods-list-item').on('change', function () {
-    var tmpCheckEl = $(this)
-    var checkEvent = new ShoppingCarObserver(tmpCheckEl, null)
-    checkEvent.checkedChange()
-    checkEvent.checkIsAll()
-})
-$('.goods-content').on('click', '.car-decrease', function () {
-    var goodsInput = $(this).parents('.input-group').find('.goods-count')
-    var decreaseCount = new ShoppingCarObserver(goodsInput, false)
-    decreaseCount.showCount()
-    decreaseCount.computeGoodsMoney()
-})
-$('.goods-content').on('click', '.car-add', function () {
-    var goodsInput = $(this).parents('.input-group').find('.goods-count')
-    var addCount = new ShoppingCarObserver(goodsInput, true)
-    addCount.showCount()
-    addCount.computeGoodsMoney()
-})
-$('.goods-content').on('click', '.item-delete', function () {
-    var goodsInput = $(this).parents('.goods-item').find('.goods-list-item')
-    deleteGoods = new ShoppingCarObserver(goodsInput, null)
-    $('#deleteItemTip').modal('show')
-})
-$('.deleteSure').on('click', function () {
-    if (deleteGoods !== null) {
-        deleteGoods.deleteGoods()
-    }
-    $('#deleteItemTip').modal('hide')
-})
-$('#deleteMulty').on('click', function () {
-    if ($('.goods-list-item:checked').length <= 0) {
-        $('#selectItemTip').modal('show')
-    } else {
-        $('#deleteMultyTip').modal('show')
-    }
-})
-$('.deleteMultySure').on('click', function () {
-    for (var i = 0; i < $('.goods-list-item:checked').length; i++) {
-        var multyDelete = new ShoppingCarObserver($('.goods-list-item:checked').eq(i), null)
-        multyDelete.deleteGoods()
-        i--
-    }
-    multyDelete.checkOptions()
-    $('#deleteMultyTip').modal('hide')
-})

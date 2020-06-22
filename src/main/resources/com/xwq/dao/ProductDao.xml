@@ -16,6 +16,8 @@
     <select id="findProductByCid" resultType="product">
 		select * from product
 		where category_id=#{cid}
+		order by category_id
+		desc
 	</select>
 
     <!-- 增加数据 -->

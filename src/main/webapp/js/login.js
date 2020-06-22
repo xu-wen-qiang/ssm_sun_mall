@@ -66,7 +66,7 @@ $(function () {
                 }
                 if (data.errorCode == 200) {
                     alert(data.errorMsg)
-                    window.location.href = "http://127.0.0.1:8080/ssm_sun_mall_war/login.jsp"
+                    window.location.href = "http://127.0.0.1:8080/ssm_sun_mall_war/html/login.html"
                 }
             }
         });

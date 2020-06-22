@@ -84,6 +84,7 @@ public class ErrorMsg<T> {
 
     public static final ErrorMsg LOGIN_EXPIRE = new ErrorMsg(202, "登陆过期");
 
+
     public static final ErrorMsg ACCESS_LIMITED = new ErrorMsg(301, "访问受限");
 
     public static final ErrorMsg ARGS_ERROR = new ErrorMsg(501, "参数错误");

@@ -18,10 +18,13 @@ public class Cart implements Serializable {
      * 商品id
      */
     private Integer productId;
+
     /**
      * 数量
      */
     private Integer quantity;
+
+    private Product product;
 
 
     public Integer getId() {
@@ -56,4 +59,11 @@ public class Cart implements Serializable {
         this.quantity = quantity;
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 }

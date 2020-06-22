@@ -1,6 +1,7 @@
 package com.xwq.service;
 
 import com.xwq.entity.Cart;
+import com.xwq.util.ErrorMsg;
 
 import java.util.List;
 
@@ -13,44 +14,57 @@ import java.util.List;
 public interface CartService {
 
     /**
-     * 通过ID查询单条数据
+     * 通过实体作为筛选条件查询
      *
-     * @param id 主键
-     * @return 实例对象
-     */
-    Cart queryById(Integer id);
-
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit  查询条数
+     * @param cart 实例对象
      * @return 对象列表
      */
-    List<Cart> queryAllByLimit(int offset, int limit);
+    List<Cart> queryAll(Cart cart);
+
+    /**
+     * 通过ID查询单条数据
+     *
+     * @param cart 实例对象
+     * @return 实例对象
+     */
+    Cart queryOne(Cart cart);
+
+    /**
+     * 通过ID查询单条数据
+     *
+     * @param pid 主键
+     * @return 实例对象
+     */
+    Cart queryById(Integer pid, Integer uid);
 
     /**
      * 新增数据
      *
      * @param cart 实例对象
-     * @return 实例对象
+     * @return 影响行数
      */
-    Cart insert(Cart cart);
+    int insert(Cart cart);
 
     /**
      * 修改数据
      *
      * @param cart 实例对象
-     * @return 实例对象
+     * @return 影响行数
      */
-    Cart update(Cart cart);
+    int update(Cart cart);
 
     /**
      * 通过主键删除数据
      *
      * @param id 主键
-     * @return 是否成功
+     * @return 影响行数
      */
-    boolean deleteById(Integer id);
+    int deleteById(Integer id);
 
+    /**
+     * @param ids 用户
+     * @param uid 产品
+     * @return
+     */
+    ErrorMsg deleteList(String ids, Integer uid);
 }

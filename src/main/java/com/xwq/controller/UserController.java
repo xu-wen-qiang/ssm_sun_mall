@@ -51,10 +51,13 @@ public class UserController {
 
         user.setPassword(Md5Util.getMD5(user.getPassword()));
         User User = userService.login(user);
+
         if (User != null) {
+            session.setAttribute("user", User);
+            System.out.println(session.getAttribute("user").toString() + "((((((((((((((((((((((((((((((((((((((((((((");
             return ErrorMsg.LOGIN_SUCCESS.setNewData(User);
         }
-
+        System.out.println(session.getAttribute("user").toString() + "((((((((((((((((((((((((((((((((((((((((((((");
         return ErrorMsg.LOGIN_ERROR;
     }
 
@@ -86,4 +89,15 @@ public class UserController {
         return ErrorMsg.LOGIN_ERROR.setNewErrorMsg("用户已经存在");
     }
 
+    //判断是否登陆
+    @RequestMapping(value = "/isLogin")
+    public @ResponseBody
+    ErrorMsg<User> isLogin(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+//        System.out.println("=================++++++++++++++++===================="+user.toString());
+        if (user != null) {
+            return ErrorMsg.SUCCESS.setNewData(user);
+        }
+        return ErrorMsg.ACCESS_LIMITED;
+    }
 }

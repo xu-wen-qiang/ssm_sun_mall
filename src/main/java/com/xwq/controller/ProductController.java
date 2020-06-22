@@ -142,7 +142,6 @@ public class ProductController {
         PageHelper.startPage(pn, 5);
         //2.紧跟的查询就是一个分页查询
         List<Product> list = productService.findProductByCid(cid);
-        System.out.println("=================================================================" + list.toString());
         //3.使用PageInfo包装查询后的结果,5是连续显示的条数
         PageInfo<Product> pageInfo = new PageInfo<Product>(list, 5);
         //4.使用model设置到前端
