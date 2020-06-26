@@ -30,8 +30,27 @@ public class CartServiceImpl implements CartService {
         return cartDao.queryOne(cart);
     }
 
+    @Override
+    public Cart queryOneById(Integer id) {
+        return cartDao.queryOneById(id);
+    }
+
     public Cart queryById(Integer cid, Integer uid) {
         return cartDao.queryById(cid, uid);
+    }
+
+    @Override
+    public List<Cart> queryList(String ids, Integer uid) {
+        Integer id = null;
+        String[] idStrings = ids.split(",");
+        //dao层接受的全部id数据,pIdList
+        int[] pid = new int[idStrings.length];
+        for (int i = 0; i < idStrings.length; i++) {
+            id = Integer.valueOf(idStrings[i]);
+            //得到一个id
+            pid[i] = id;
+        }
+        return cartDao.queryList(pid, uid);
     }
 
     public int insert(Cart cart) {
@@ -55,7 +74,6 @@ public class CartServiceImpl implements CartService {
             id = Integer.valueOf(idStrings[i]);
             //得到一个id
             pIdList[i] = id;
-            //调用dao层方法,传入yybIdList参数
             cartDao.deleteList(pIdList, uid);
             //查询传入的最后一个id,如果为空,说明删除成功,返回ok;如果不为空,说明删除失败,返回任意字符串;
             Cart cart = cartDao.queryById(id, uid);

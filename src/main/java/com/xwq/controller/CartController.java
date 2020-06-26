@@ -1,5 +1,6 @@
 package com.xwq.controller;
 
+import com.mysql.cj.Session;
 import com.xwq.entity.Cart;
 import com.xwq.service.CartService;
 import com.xwq.util.ErrorMsg;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -36,9 +38,20 @@ public class CartController {
         }
         return ErrorMsg.SUCCESS.setNewData(cartService.queryAll(cart));
     }
-
-    ;
-
+    @RequestMapping("queryList")
+    @ResponseBody
+    ErrorMsg queryList(String ids , Integer uid , HttpSession session){
+        session.setAttribute("ids",ids);
+        return ErrorMsg.SUCCESS.setNewData(cartService.queryList(ids,uid));
+    }
+    //测试session
+    @RequestMapping("ids")
+    @ResponseBody
+    String session(HttpSession session){
+        System.out.println("ids*****************************"+session.getAttribute("ids").toString());
+        System.out.println("user*****************************"+session.getAttribute("user").toString());
+       return session.getAttribute("ids").toString();
+    }
     /**
      * 新增数据
      *
@@ -62,8 +75,6 @@ public class CartController {
 
         return ErrorMsg.INSERT_SUCCESS.setNewData(cartService.insert(cart));
     }
-
-    ;
 
     /**
      * 修改数据
@@ -101,6 +112,7 @@ public class CartController {
     ;
 
     @RequestMapping("deleteList")
+    @ResponseBody
     public ErrorMsg deleteById(String ids, Integer uid) {
 
         System.out.println(uid + "============================================================\n" +

@@ -28,7 +28,13 @@ public interface CartDao {
      * @return 实例对象
      */
     Cart queryOne(Cart cart);
-
+    /**
+     * 通过ID查询单条数据
+     *
+     * @param id 实例对象
+     * @return 实例对象
+     */
+    Cart queryOneById(Integer id);
     /**
      * 通过ID查询单条数据
      *
@@ -37,6 +43,13 @@ public interface CartDao {
      */
     Cart queryById(@Param("pid") Integer pid, @Param("uid") Integer uid);
 
+    /**
+     *
+     * @param ids
+     * @param uid
+     * @return
+     */
+    List<Cart> queryList(@Param("ids") int[] ids, @Param("uid") int uid);
     /**
      * 新增数据
      *

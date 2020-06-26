@@ -19,17 +19,7 @@
     <mvc:resources mapping="fonts" location="/fonts/**"/>
     <mvc:resources mapping="images" location="/images/**"/>
     <mvc:resources mapping="upload" location="/upload/**"/>
-    <!-- 自定义参数绑定 -->
-    <!--    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">-->
-    <!--        &lt;!&ndash; 转换器 &ndash;&gt;-->
-    <!--        <property name="converters">-->
-    <!--            <list>-->
-    <!--                &lt;!&ndash; 日期类型转换 &ndash;&gt;-->
-    <!--                <bean class="com.xwq.converter.DateConverter"/>-->
-    <!--            </list>-->
-    <!--        </property>-->
-    <!--    </bean>-->
-    <!-- 配置视图解析器 -->
+
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- 指定前缀 -->
         <property name="prefix" value="/html/"/>

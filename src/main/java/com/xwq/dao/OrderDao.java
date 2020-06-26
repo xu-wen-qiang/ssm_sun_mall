@@ -47,6 +47,7 @@ public interface OrderDao {
      */
     int insert(Order order);
 
+    int insertList(List<Order> order);
     /**
      * 修改数据
      *

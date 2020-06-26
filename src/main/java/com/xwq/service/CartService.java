@@ -2,6 +2,7 @@ package com.xwq.service;
 
 import com.xwq.entity.Cart;
 import com.xwq.util.ErrorMsg;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -28,7 +29,13 @@ public interface CartService {
      * @return 实例对象
      */
     Cart queryOne(Cart cart);
-
+    /**
+     * 通过ID查询单条数据
+     *
+     * @param id 实例对象
+     * @return 实例对象
+     */
+    Cart queryOneById(Integer id);
     /**
      * 通过ID查询单条数据
      *
@@ -37,6 +44,13 @@ public interface CartService {
      */
     Cart queryById(Integer pid, Integer uid);
 
+    /**
+     *
+     * @param ids
+     * @param uid
+     * @return
+     */
+    List<Cart> queryList(@Param("ids") String ids, @Param("uid") Integer uid);
     /**
      * 新增数据
      *

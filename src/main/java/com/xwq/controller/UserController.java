@@ -94,7 +94,6 @@ public class UserController {
     public @ResponseBody
     ErrorMsg<User> isLogin(HttpSession session) {
         User user = (User) session.getAttribute("user");
-//        System.out.println("=================++++++++++++++++===================="+user.toString());
         if (user != null) {
             return ErrorMsg.SUCCESS.setNewData(user);
         }

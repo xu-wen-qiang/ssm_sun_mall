@@ -49,7 +49,7 @@ function listItem(cid, cname) {
                 itemStr += `
                     <div class="col-sm-3" onclick="openDetail(${data.list[i].id})">
                         <div class="thumbnail thumbnail-border">
-                            <img src="http://127.0.0.1:8080/ssm_sun_mall_war/upload/${data.list[i].name + "1.jpg"}" alt="...">
+                            <img src="http://127.0.0.1:8080/ssm_sun_mall_war/upload/${data.list[i].name + "1.PNG"}" alt="...">
                             <div class="caption">
                                 <h3 class="text-center h4">${data.list[i].name}</h3>
                                 <p class="text-center p">${data.list[i].detail}</p>
@@ -84,7 +84,6 @@ function login() {
             console.log("error" + e)
             // alert("login"+e)
         }
-
     })
 }
 
@@ -99,7 +98,6 @@ function myCart() {
                 if (data.errorCode == 200) {
                     window.location.href = "html/myCart.html?userid=" + data.data.id
                 }
-                a
             }, error(e) {
                 console.log("error" + e)
                 alert("login" + e)

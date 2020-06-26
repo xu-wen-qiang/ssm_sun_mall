@@ -84,7 +84,7 @@ function listItem(data) {
         htmlStr += "<tr>" +
             "<td>" + data.list[i].name + "</td><td>" + data.list[i].price + "</td>" +
             "<td><img title='" + data.list[i].name + "'style='width: 60px; height: 60px' src=" + uploadUrl + data.list[i].name + "1.jpg></td>" +
-            "<td><img title='" + data.list[i].subtitle + "'style='width: 60px; height: 60px' src=" + uploadUrl + data.list[i].name + "2.jpg></td>" +
+            "<td><img title='" + data.list[i].subtitle + "'style='width: 60px; height: 60px' src=" + uploadUrl + data.list[i].mianImge +"></td>" +
             "<td>" + data.list[i].detail + "</td>" +
             "<td><a href=\"javascript:del(" + data.list[i].id + ")\")>" +
             "<button type=\"button\" class=\"btn btn-success btn-lg\" onclick=\"return confirm('确定要删除信息吗？') \">" +

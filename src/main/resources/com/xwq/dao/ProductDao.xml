@@ -2,18 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xwq.dao.ProductDao">
 
+    <resultMap type="com.xwq.entity.Product" id="ProductMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="categoryId" column="category_id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="subtitle" column="subtitle" jdbcType="VARCHAR"/>
+        <result property="mainImage" column="main_image" jdbcType="VARCHAR"/>
+        <result property="subImages" column="sub_images" jdbcType="VARCHAR"/>
+        <result property="detail" column="detail" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="stock" column="stock" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
     <!-- 查询单条数据，类型int返回items类型 -->
-    <select id="findOne" parameterType="int" resultType="product">
+    <select id="findOne" parameterType="int" resultMap="ProductMap">
 		select *
 		from product where id=#{id}
 	</select>
 
     <!-- 查询所有数据id降序 -->
-    <select id="findAll" resultType="product">
+    <select id="findAll" resultMap="ProductMap">
 		select * from product order by id
 		desc
 	</select>
-    <select id="findProductByCid" resultType="product">
+    <select id="findProductByCid" resultMap="ProductMap">
 		select * from product
 		where category_id=#{cid}
 		order by category_id

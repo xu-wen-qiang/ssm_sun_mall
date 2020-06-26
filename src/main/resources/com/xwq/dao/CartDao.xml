@@ -61,6 +61,17 @@
             </if>
         </where>
     </select>
+    <select id="queryList" resultMap="CartMapByPid">
+        select * from cart where user_id = #{uid} and
+        id in
+        <foreach collection="ids" item="ids" index="no"
+                 open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </select>
+    <select id="queryOneById" resultMap="CartMapByPid">
+        select * from cart where id = #{id}
+    </select>
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into cart(user_id, product_id, quantity)
@@ -93,10 +104,11 @@
     </delete>
     <delete id="deleteList">
         delete from cart where user_id = #{uid} and
-        product_id in
+        id in
         <foreach collection="ids" item="ids" index="no"
                  open="(" separator="," close=")">
             #{ids}
         </foreach>
     </delete>
+
 </mapper>

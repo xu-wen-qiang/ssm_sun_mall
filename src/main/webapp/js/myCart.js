@@ -1,7 +1,8 @@
-var userid = $.query.get("userId")
-alert(userid)
+var userid
 var i = 0;
 $(function () {
+    userid = $.query.get("userid")
+    alert(userid)
     item()
     $("#ifAll").on("click", function () {
         if (i == 0) {
@@ -28,7 +29,7 @@ function item() {
                             <td>
                               <div class="checkbox">
                                 <label>
-                                  <input type="checkbox" name="ids" value="${data.data[i].id}">
+                                  <input type="checkbox" onclick="updateSelection(this)" name="ids" value="${data.data[i].id}">
                                 </label>
                               </div>
                             </td>
@@ -41,7 +42,6 @@ function item() {
                             <input type="text" value="${data.data[i].quantity}" class="text_box" id="text" onblur="change()"/>
                             <input type="button" value="-" id="min"/>
                             </td>
-                            <td>#</td>
                             </tr>`
                 }
                 $("#tbody").append(tbody)
@@ -78,7 +78,7 @@ function updateSelection(selectFlag) {
 }
 
 //批量删除事件
-function batchDeleYyb() {
+function deleteList() {
     //清空
     ids = '';
     //页面input的name属性
@@ -97,18 +97,14 @@ function batchDeleYyb() {
     }
 
     if (ids.length == 0) {
-        alert("请选择要删除的app!");
+        alert("请选择要移除的商品!");
         return;
     }
 
     if (window.confirm("确认删除吗?")) {
         $.ajax({//利用ajax发出请求
             type: "post",//请求类型
-            url: "http://127.0.0.1:8080/ssm_sun_mall_war/cart/deleteList?ids=" + ids + "&uid=" + userid, //向Controller里的batchDeleYyb传输ids
-            // data: {
-            //     ids: ids,
-            //     uid:userid
-            // },     //键值对
+            url: "http://127.0.0.1:8080/ssm_sun_mall_war/cart/deleteList?ids=" + ids + "&uid=" + userid,
             success: function (data) {//删除成功后，后台会返回一个"ok";
                 if (data.errorCode == 200) {
                     alert("删除成功");//返回ok后弹出一个对话框。
@@ -119,9 +115,43 @@ function batchDeleYyb() {
             }
         });
     }
-    alert(ids)
 }
 
-//全选/反选操作
-//全选
+function insertOrder() {
+    //清空
+    ids = '';
+    //页面input的name属性
+    var selectIds = document.getElementsByName("ids");
+    for (var i = 0; i < selectIds.length; i++) {
+        if (selectIds[i].checked) {
+            //取得该属性的值id
+            var id = $(selectIds[i]).val();
+            //拼接ids字符串
+            if (ids == '') {
+                ids = id;
+            } else {
+                ids += ',' + id;
+            }
+        }
+    }
 
+    if (ids.length == 0) {
+        alert("请选择购买的商品!");
+        return;
+    }
+
+    if (window.confirm("提交订单?")) {
+        $.ajax({//利用ajax发出请求
+            type: "post",//请求类型
+            url: "http://127.0.0.1:8080/ssm_sun_mall_war/cart/queryList?ids=" + ids + "&uid=" + userid,
+            success: function (data) {//查询成功后，后台会返回一个数据;
+                if (data.errorCode == 200) {
+                    alert(data.errorMsg);//返回ok后弹出一个对话框。
+                    window.location.href = "orderList.html?ids=" + ids + "&uid=" + userid;//相当于刷新界面
+                } else {
+                    alert("添加失败");
+                }
+            }
+        });
+    }
+}
