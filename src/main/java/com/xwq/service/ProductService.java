@@ -1,6 +1,8 @@
 package com.xwq.service;
 
 import com.xwq.entity.Product;
+import com.xwq.util.ErrorMsg;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -29,4 +31,10 @@ public interface ProductService {
 
     //6.通过产品类别id查询
     public List<Product> findProductByCid(int cid);
+
+    //7.批量删除
+    public ErrorMsg deleteList(String ids);
+
+    //8模糊查询
+    public List<Product> likeQuerry(@Param("name") String name);
 }

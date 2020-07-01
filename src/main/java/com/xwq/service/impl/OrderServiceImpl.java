@@ -31,6 +31,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> queryByUId(Integer uid) {
+        return orderDao.queryByUId(uid);
+    }
+
+    @Override
     public List<Order> queryAllByLimit(int offset, int limit) {
         return orderDao.queryAllByLimit(offset,limit);
     }
@@ -64,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
             order.setUserId(cart.getUserId());
             order.setQuantity(cart.getQuantity());
             order.setAddress(address);
-            order.getPayment(cart.getProduct().getPrice()*cart.getQuantity());
+            order.setPayment(cart.getProduct().getPrice()*cart.getQuantity());
             orderList.add(order);
         }
         return orderDao.insertList(orderList);

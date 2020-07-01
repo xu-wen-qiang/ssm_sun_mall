@@ -31,4 +31,11 @@ public interface UserService {
      * @param user
      */
     public int register(User user);
+
+    /**
+     * 修改
+     * @param user
+     * @return
+     */
+    public int update(User user);
 }

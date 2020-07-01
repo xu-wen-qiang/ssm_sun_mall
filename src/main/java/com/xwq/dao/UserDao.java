@@ -36,4 +36,11 @@ public interface UserDao {
      * @param user
      */
     public int Register(User user);
+
+    /**
+     * 修改
+     * @param user
+     * @return
+     */
+    public int update(User user);
 }

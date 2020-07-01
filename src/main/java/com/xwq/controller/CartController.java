@@ -27,16 +27,16 @@ public class CartController {
     /**
      * 通过实体作为筛选条件查询
      *
-     * @param cart 实例对象
+     * @param uid 实例对象
      * @return 对象列表
      */
     @RequestMapping("queryAll")
     @ResponseBody
-    ErrorMsg<List<Cart>> queryAll(Cart cart) {
-        if (cart == null || cart.equals("")) {
+    ErrorMsg<List<Cart>> queryAll(Integer uid) {
+        if (uid == null || uid.equals("")) {
             return ErrorMsg.OTHER_SYSTEM_ERROR;
         }
-        return ErrorMsg.SUCCESS.setNewData(cartService.queryAll(cart));
+        return ErrorMsg.SUCCESS.setNewData(cartService.queryAll(uid));
     }
     @RequestMapping("queryList")
     @ResponseBody
@@ -64,7 +64,7 @@ public class CartController {
         if (cart == null || cart.equals("")) {
             return ErrorMsg.INSERT_ERROR;
         }
-        Cart myCart = cartService.queryOne(cart);
+        Cart myCart = cartService.queryById(cart.getProductId(),cart.getUserId());
         if (myCart != null) {
             System.out.println(cart.getQuantity() + "========");
             System.out.println("=========================" + myCart.getQuantity());
@@ -91,8 +91,24 @@ public class CartController {
         return ErrorMsg.UPDATE_SUCCESS.setNewData(cartService.update(cart));
     }
 
-    ;
+    /**
+     *
+     * @param id
+     * @param quantity
+     * @return
+     */
+    @RequestMapping("updateQuantity")
+    @ResponseBody
+    ErrorMsg updateQuantity(Integer id , Integer quantity){
+        if (id!=null && quantity!=null){
+            Cart cart = new Cart();
+            cart.setId(id);
+            cart.setQuantity(quantity);
 
+            return ErrorMsg.UPDATE_SUCCESS.setNewData(cartService.update(cart));
+        }
+        return ErrorMsg.UPDATE_ERROR;
+    }
 
     /**
      * 通过主键删除数据
@@ -108,8 +124,6 @@ public class CartController {
         }
         return ErrorMsg.DELETE_SUCCESS.setNewData(cartService.deleteById(id));
     }
-
-    ;
 
     @RequestMapping("deleteList")
     @ResponseBody

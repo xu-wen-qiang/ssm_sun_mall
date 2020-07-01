@@ -30,6 +30,7 @@ public interface OrderDao {
      */
     List<Order> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
+    List<Order> queryByUId(@Param("uid") Integer uid);
 
     /**
      * 通过实体作为筛选条件查询

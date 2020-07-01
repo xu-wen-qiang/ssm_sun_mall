@@ -15,4 +15,5 @@ public class Pages {
     public String login() {
         return "login";
     }
+
 }

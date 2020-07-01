@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xwq.entity.Product;
 import com.xwq.service.ProductService;
+import com.xwq.util.ErrorMsg;
 import com.xwq.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -83,7 +84,7 @@ public class ProductController {
     public String addProduct(Product product, MultipartFile multiple_mainImage, MultipartFile multiple_subImages, HttpServletRequest request, HttpServletResponse response) {
         //设置图片上传的路径
         String path = request.getServletContext().getRealPath("/upload");
-        System.out.println("=================================图片上传");
+        System.out.println("=================================图片上传"+path);
         product.setMainImage(FileUtil.upLoadFile(path, multiple_mainImage));
         product.setSubImages(FileUtil.upLoadFile(path, multiple_subImages));
         // 调用添加方法
@@ -95,15 +96,24 @@ public class ProductController {
 
     //删除商品
     @RequestMapping("/del")
-    public String del(int id) {
+    public String del(Integer id) {
         productService.del(id);
         return "redirect:queryProduct";
     }
-
+    //删除商品
+    @RequestMapping("/delList")
+    public String delList(String ids) {
+        System.out.println("ids================================"+ids.toString());
+        ErrorMsg errorMsg = productService.deleteList(ids);
+        if (errorMsg.getErrorCode() != 200){
+            return errorMsg.getErrorMsg();
+        }
+        return "redirect:queryProduct";
+    }
     //查询单条记录
     @RequestMapping("/findOne")
     public @ResponseBody
-    Product findOne(int id) {
+    Product findOne(Integer id) {
         Product product = productService.findOne(id);
 //        model.addAttribute("product", product);
         //返给更新的方法
@@ -136,12 +146,30 @@ public class ProductController {
     //分页查询数据
     @RequestMapping("/queryProductByCid")
     public @ResponseBody
-    PageInfo<Product> queryProducByCid(@RequestParam(value = "pn", defaultValue = "1") Integer pn, Model model, int cid) {
+    PageInfo<Product> queryProducByCid(@RequestParam(value = "pn", defaultValue = "1") Integer pn, Integer cid) {
 
         //1.引入分页插件,pn是第几页，5是每页显示多少行
         PageHelper.startPage(pn, 5);
         //2.紧跟的查询就是一个分页查询
         List<Product> list = productService.findProductByCid(cid);
+        //3.使用PageInfo包装查询后的结果,5是连续显示的条数
+        PageInfo<Product> pageInfo = new PageInfo<Product>(list, 5);
+        //4.使用model设置到前端
+//        model.addAttribute("pageInfo",pageInfo);
+        //5.最后设置返回的jsp
+//        return "showProduct";
+        return pageInfo;
+    }
+
+    //分页查询数据
+    @RequestMapping("/likeQuery")
+    public @ResponseBody
+    PageInfo<Product> likeQuery(@RequestParam(value = "pn", defaultValue = "1") Integer pn, String name) {
+
+        //1.引入分页插件,pn是第几页，5是每页显示多少行
+        PageHelper.startPage(pn, 5);
+        //2.紧跟的查询就是一个分页查询
+        List<Product> list = productService.likeQuerry(name);
         //3.使用PageInfo包装查询后的结果,5是连续显示的条数
         PageInfo<Product> pageInfo = new PageInfo<Product>(list, 5);
         //4.使用model设置到前端

@@ -17,7 +17,7 @@ public class FileUtil {
         String newname = UUID.randomUUID().toString() + fileName.substring(fileName.lastIndexOf("."));
         System.out.println("新文件名是:" + newname);
         // 创建文件流对象picfile
-        File file = new File(filePath, newname);
+        File file = new File("D:\\JAVA\\upload", newname);
         System.out.println("文件流为：" + file);
         try {
             if (!file.exists()) {

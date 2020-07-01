@@ -26,12 +26,14 @@ public class UserServiceImpl implements UserService {
     }
 
     public int register(User user) {
-        System.out.println("register=============================================================register=================register");
         int userId = userDao.Register(user);
         if (userId != 0) {
             userId = user.getId();
         }
-        System.out.println("register=============================================================register=================register" + userId);
         return userId;
+    }
+
+    public int update(User user) {
+        return userDao.update(user);
     }
 }

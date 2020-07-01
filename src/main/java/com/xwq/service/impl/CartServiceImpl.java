@@ -22,8 +22,8 @@ public class CartServiceImpl implements CartService {
     @Autowired
     CartDao cartDao;
 
-    public List<Cart> queryAll(Cart cart) {
-        return cartDao.queryAll(cart);
+    public List<Cart> queryAll(Integer uid) {
+        return cartDao.queryAll(uid);
     }
 
     public Cart queryOne(Cart cart) {

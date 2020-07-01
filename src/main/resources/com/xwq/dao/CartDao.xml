@@ -20,20 +20,8 @@
         select
         id, user_id, product_id, quantity
         from cart
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="userId != null">
-                and user_id = #{userId}
-            </if>
-            <if test="productId != null">
-                and product_id = #{productId}
-            </if>
-            <if test="quantity != null">
-                and quantity = #{quantity}
-            </if>
-        </where>
+        where
+        user_id = #{uid}
     </select>
     <!--查询单个-->
     <select id="queryById" resultMap="CartMap">
@@ -77,9 +65,12 @@
         insert into cart(user_id, product_id, quantity)
         values (#{userId}, #{productId},
         <if test="quantity != null">
-            quantity = #{quantity}
+            #{quantity}
         </if>
-        quantity = 1
+        <if test="quantity == null">
+             1
+        </if>
+
         )
     </insert>
     <!--通过主键修改数据-->

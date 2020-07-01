@@ -35,6 +35,11 @@
 		desc
 	</select>
 
+<!--    name模糊查询-->
+    <select id="likeQuerry" resultMap="ProductMap">
+        select * from product
+        where name like CONCAT(CONCAT('%',#{name},'%'))
+    </select>
     <!-- 增加数据 -->
     <insert id="add" parameterType="product">
 		insert into product(category_id, name, subtitle, main_image, sub_images, detail, price, stock, status, create_time, update_time)
@@ -86,4 +91,10 @@
     <delete id="del" parameterType="int">
 		delete from product where id=#{id}
 	</delete>
+    <delete id="deleteList">
+        delete from product where id in
+        <foreach collection="ids" item="ids" separator="," open="(" close=")" >
+            #{ids}
+        </foreach>
+    </delete>
 </mapper>

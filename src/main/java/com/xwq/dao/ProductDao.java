@@ -29,4 +29,9 @@ public interface ProductDao {
 
     //6通过种类id查询对应商品信息
     public List<Product> findProductByCid(int cid);
+
+    //7批量删除
+    public void deleteList(@Param("ids") int[] ids);
+
+    public List<Product> likeQuerry(@Param("name") String name);
 }

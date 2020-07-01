@@ -22,6 +22,12 @@ public interface OrderService {
     Order queryById(Integer id);
 
     /**
+     *
+     * @param uid
+     * @return
+     */
+    List<Order> queryByUId(@Param("uid") Integer uid);
+    /**
      * 查询指定行数据
      *
      * @param offset 查询起始位置
